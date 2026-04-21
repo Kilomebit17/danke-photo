@@ -18,8 +18,8 @@ $c-accent-deep: #8a6541;
 $c-accent-soft: #e7d6c2;
 
 // Typography
-$ff-serif: 'Cormorant Garamond', 'Times New Roman', serif;
-$ff-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$ff-serif: 'Cormorant Garamond', 'Cormorant Garamond Fallback', 'Times New Roman', serif;
+$ff-sans:  'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
 // Motion
 $ease-out:   cubic-bezier(0.22, 1, 0.36, 1);

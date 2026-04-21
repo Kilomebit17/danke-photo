@@ -1,6 +1,26 @@
 @use './variables' as *;
 @use './mixins' as *;
 
+// Metric-adjusted fallbacks: when Cormorant Garamond / Inter swap in, the
+// fallback glyphs already occupy the same space so there is no layout shift.
+@font-face {
+  font-family: 'Cormorant Garamond Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 92%;
+  ascent-override: 88%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('Helvetica Neue');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
 body {
   background: $c-bg;
   color: $c-ink;
