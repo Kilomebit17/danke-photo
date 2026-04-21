@@ -1,0 +1,44 @@
+// ——————————————————————————————————————————————————
+// Design tokens
+// ——————————————————————————————————————————————————
+
+// Palette
+$c-bg:          #f4efe8; // warm cream
+$c-bg-alt:      #ece4d8; // sand
+$c-bg-deep:     #1a1714; // near-black for contrast sections
+$c-ink:         #191613; // primary text
+$c-ink-2:       #4b423b; // muted text
+$c-ink-3:       #8a7f75; // subtle
+$c-line:        rgba(25, 22, 19, 0.14);
+$c-line-soft:   rgba(25, 22, 19, 0.08);
+
+// Accent — warm sand / light brown
+$c-accent:      #b68a5f;
+$c-accent-deep: #8a6541;
+$c-accent-soft: #e7d6c2;
+
+// Typography
+$ff-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+$ff-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+// Motion
+$ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+$ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+$ease-soft:  cubic-bezier(0.4, 0, 0.1, 1);
+
+// Layout
+$radius-sm: 6px;
+$radius-md: 14px;
+$radius-lg: 22px;
+
+// Breakpoints
+$bp-sm:  480px;
+$bp-md:  768px;
+$bp-lg:  1024px;
+$bp-xl:  1280px;
+$bp-xxl: 1440px;
+
+// Spacing scale (fluid)
+$container-max: 1360px;
+$gutter: clamp(1.25rem, 3vw, 2.5rem);
+$section-y: clamp(5rem, 10vw, 9rem);

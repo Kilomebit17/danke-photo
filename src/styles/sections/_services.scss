@@ -1,0 +1,253 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.services {
+  padding-block: $section-y;
+  background: $c-bg;
+
+  &__grid {
+    @include container;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @include media($bp-md) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+  }
+}
+
+.service-card {
+  --card-bg: #{$c-bg-alt};
+  position: relative;
+  background: var(--card-bg);
+  border-radius: $radius-lg;
+  padding: clamp(1.6rem, 2.4vw, 2.2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  overflow: hidden;
+  min-height: 560px;
+  transition: transform 0.6s $ease-out;
+  will-change: transform;
+
+  &:nth-child(2) {
+    --card-bg: #{$c-bg-deep};
+    color: $c-bg;
+  }
+
+  @include media($bp-md) {
+    &:nth-child(2) {
+      transform: translateY(-2.5rem);
+    }
+
+    &:hover {
+      transform: translateY(-6px);
+
+      &:nth-child(2) {
+        transform: translateY(calc(-2.5rem - 6px));
+      }
+    }
+  }
+
+  &__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: $radius-md;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.05);
+    isolation: isolate;
+
+    @include media-max($bp-md) {
+      // On mobile the cards stack — the slider reads better slightly taller.
+      aspect-ratio: 5 / 4;
+    }
+  }
+
+  &__slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 1.4s $ease-out, transform 7s linear;
+    will-change: opacity, transform;
+
+    &.is-active {
+      opacity: 1;
+      transform: scale(1.14);
+    }
+  }
+
+  &__dots {
+    position: absolute;
+    left: 50%;
+    bottom: 0.8rem;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.35rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    pointer-events: none;
+
+    i {
+      display: block;
+      width: 14px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.45);
+      border-radius: 1px;
+      transition: background-color 0.4s $ease-out, width 0.5s $ease-out;
+
+      &.is-active {
+        background: #fff;
+        width: 22px;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__slide {
+      transition: opacity 0.2s linear;
+      transform: none;
+
+      &.is-active {
+        transform: none;
+      }
+    }
+  }
+
+  &__index {
+    @include mono-label;
+    color: $c-ink-3;
+    opacity: 0.7;
+  }
+
+  &:nth-child(2) &__index {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__title {
+    @include serif-display;
+    font-size: clamp(1.9rem, 2.5vw, 2.4rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+
+    em {
+      font-style: italic;
+      color: $c-accent-deep;
+    }
+  }
+
+  &:nth-child(2) &__title em {
+    color: $c-accent;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid $c-line-soft;
+    margin-top: auto;
+
+    li {
+      display: flex;
+      gap: 0.7rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: $c-ink-2;
+
+      &::before {
+        content: '';
+        flex: 0 0 auto;
+        width: 14px;
+        height: 1px;
+        margin-top: 0.75rem;
+        background: $c-accent-deep;
+      }
+    }
+  }
+
+  &:nth-child(2) &__list {
+    border-top-color: rgba(255, 255, 255, 0.12);
+
+    li {
+      color: rgba(255, 255, 255, 0.72);
+
+      &::before {
+        background: $c-accent;
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid $c-line-soft;
+  }
+
+  &:nth-child(2) &__footer {
+    border-top-color: rgba(255, 255, 255, 0.12);
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+
+    strong {
+      @include serif-display;
+      font-size: clamp(1.8rem, 2.4vw, 2.2rem);
+      font-weight: 500;
+      font-style: italic;
+      color: $c-accent-deep;
+    }
+
+    span {
+      @include mono-label;
+      color: $c-ink-3;
+      font-size: 0.64rem;
+    }
+  }
+
+  &:nth-child(2) &__price {
+    strong {
+      color: $c-accent;
+    }
+    span {
+      color: rgba(255, 255, 255, 0.55);
+    }
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    @include mono-label;
+    font-size: 0.68rem;
+    color: $c-ink;
+    padding-bottom: 2px;
+    border-bottom: 1px solid $c-ink;
+    transition: gap 0.4s $ease-out;
+
+    &:hover {
+      gap: 0.9rem;
+    }
+  }
+
+  &:nth-child(2) &__cta {
+    color: $c-bg;
+    border-bottom-color: $c-bg;
+  }
+}

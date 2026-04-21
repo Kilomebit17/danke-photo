@@ -1,0 +1,432 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+body {
+  background: $c-bg;
+  color: $c-ink;
+  font-family: $ff-sans;
+  font-size: 16px;
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+
+// Positioned element used as an IntersectionObserver target to detect scroll
+// position — zero layout cost, no scroll listener.
+[data-scroll-sentinel] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 300;
+  padding: 0.55rem 1rem;
+  background: $c-ink;
+  color: $c-bg;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  transform: translateY(-150%);
+  transition: transform 0.3s $ease-out;
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+// —— Page loader ——
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: $c-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  &__text {
+    @include serif-display;
+    font-size: clamp(2rem, 6vw, 4rem);
+    letter-spacing: -0.02em;
+    color: $c-ink;
+    opacity: 0;
+  }
+
+  &.is-hidden {
+    transition: opacity 0.8s $ease-out, visibility 0s linear 0.8s;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+// —— Header ——
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem $gutter;
+  transition: background-color 0.4s $ease-out, border-color 0.4s $ease-out,
+    backdrop-filter 0.4s $ease-out, padding 0.4s $ease-out;
+  border-bottom: 1px solid transparent;
+
+  &.is-scrolled {
+    background: rgba(244, 239, 232, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: $c-line-soft;
+    padding-block: 0.9rem;
+  }
+
+  &__logo {
+    @include serif-display;
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+    color: $c-ink;
+    transition: color 0.3s $ease-out;
+
+    &:hover {
+      color: $c-accent-deep;
+    }
+  }
+
+  &__nav {
+    display: none;
+    align-items: center;
+    gap: 2.2rem;
+
+    @include media($bp-md) {
+      display: flex;
+    }
+
+    a {
+      position: relative;
+      font-size: 0.92rem;
+      color: $c-ink-2;
+      transition: color 0.3s $ease-out;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -4px;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.4s $ease-out;
+      }
+
+      &:hover {
+        color: $c-ink;
+      }
+
+      &:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+    }
+  }
+
+  &__cta {
+    padding: 0.5rem 1.1rem;
+    border: 1px solid $c-line;
+    border-radius: 999px;
+    color: $c-ink !important;
+
+    &::after {
+      display: none;
+    }
+
+    &:hover {
+      background: $c-ink;
+      color: $c-bg !important;
+      border-color: $c-ink;
+    }
+  }
+
+  &__burger {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px solid $c-line;
+    background: transparent;
+    overflow: hidden;
+    transition: border-color 0.35s $ease-out, background 0.35s $ease-out;
+
+    @include media($bp-md) {
+      display: none;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: $c-ink;
+      border-radius: inherit;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.45s $ease-out;
+      z-index: 0;
+    }
+
+    &:hover::before,
+    &.is-open::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+      display: block;
+      height: 1.5px;
+      background: $c-ink;
+      border-radius: 1px;
+      transition: width 0.4s $ease-out, transform 0.45s $ease-out,
+        background 0.35s $ease-out, opacity 0.3s $ease-out;
+      transform-origin: center;
+
+      &:nth-child(1) { width: 20px; }
+      &:nth-child(2) { width: 14px; }
+      &:nth-child(3) { width: 17px; }
+    }
+
+    &:hover span,
+    &.is-open span {
+      background: $c-bg;
+    }
+
+    &.is-open span:nth-child(1) {
+      width: 18px;
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    &.is-open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    &.is-open span:nth-child(3) {
+      width: 18px;
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+  }
+}
+
+// Mobile nav overlay
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  background: $c-bg;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 5rem $gutter $gutter;
+  transform: translateY(-100%);
+  transition: transform 0.6s $ease-inout;
+
+  &.is-open {
+    transform: translateY(0);
+  }
+
+  a {
+    @include serif-display;
+    font-size: clamp(2rem, 8vw, 3rem);
+    color: $c-ink;
+    font-style: italic;
+  }
+
+  @include media($bp-md) {
+    display: none;
+  }
+}
+
+// —— Section heads ——
+.section-head {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+
+  &--split {
+    @include media($bp-md) {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 3rem;
+
+      > div {
+        max-width: 52%;
+      }
+
+      > .section-head__desc {
+        max-width: 38%;
+        margin-bottom: 0.4rem;
+      }
+    }
+  }
+
+  &__label {
+    @include mono-label;
+    color: $c-ink-3;
+  }
+
+  &__title {
+    @include serif-display;
+    font-size: clamp(2.4rem, 7vw, 5.2rem);
+    letter-spacing: -0.015em;
+
+    em {
+      font-style: italic;
+      color: $c-accent-deep;
+    }
+  }
+
+  &__desc {
+    max-width: 52ch;
+    color: $c-ink-2;
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  }
+}
+
+// —— Buttons ——
+.btn {
+  --c-bg: #{$c-ink};
+  --c-text: #{$c-bg};
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem 1.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s $ease-out, color 0.4s $ease-out;
+  cursor: pointer;
+  isolation: isolate;
+
+  &--primary {
+    background: var(--c-bg);
+    color: var(--c-text);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: $c-accent;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.5s $ease-out;
+      z-index: -1;
+    }
+
+    &:hover::before {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $c-ink;
+    padding-inline: 0;
+
+    svg {
+      width: 1.1rem;
+      height: 1.1rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.4s $ease-out;
+    }
+
+    &:hover svg {
+      transform: translateX(4px);
+    }
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  &__loader {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+      content: '';
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: btn-spin 0.8s linear infinite;
+    }
+  }
+
+  &.is-loading &__label {
+    opacity: 0;
+  }
+  &.is-loading &__loader {
+    display: flex;
+  }
+
+  &.is-error {
+    --c-bg: #c0392b;
+    animation: btn-shake 0.4s $ease-out;
+  }
+}
+
+@keyframes btn-shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-5px); }
+  75%       { transform: translateX(5px); }
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Reveal initial state (JS removes)
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: transform, opacity;
+}

@@ -1,0 +1,188 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 7rem $gutter 3rem;
+  color: $c-bg;
+  isolation: isolate;
+
+  @include media($bp-md) {
+    padding: 8rem $gutter 4rem;
+  }
+
+  &__media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+  }
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+
+    @include media($bp-md) {
+      object-position: center center;
+    }
+
+    @include media($bp-lg) {
+      object-position: center left;
+    }
+    filter: saturate(0.92) contrast(1.02);
+    will-change: transform, opacity;
+    transform: scale(1.04);
+  }
+
+  &__veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.35) 0%,
+        rgba(0, 0, 0, 0.05) 40%,
+        rgba(0, 0, 0, 0.55) 100%
+      ),
+      linear-gradient(90deg, rgba(26, 23, 20, 0.3) 0%, rgba(26, 23, 20, 0) 55%);
+  }
+
+  &__inner {
+    @include container;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  &__eyebrow {
+    @include mono-label;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    color: rgba(255, 255, 255, 0.72);
+
+    span {
+      width: 42px;
+      height: 1px;
+      background: currentColor;
+      display: inline-block;
+    }
+  }
+
+  &__title {
+    @include serif-display;
+    font-size: clamp(4rem, 18vw, 17rem);
+    letter-spacing: -0.03em;
+    line-height: 0.88;
+    text-wrap: balance;
+    margin-block: 0.2rem -0.15em;
+
+    .word {
+      display: inline-block;
+      overflow: hidden;
+      position: relative;
+
+      // second word italic for tension
+      &:nth-child(2) {
+        font-style: italic;
+        color: $c-accent-soft;
+        margin-left: 0.1em;
+      }
+    }
+  }
+
+  &__subtitle {
+    @include mono-label;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 0.5rem;
+
+    @include media($bp-md) {
+      font-size: 0.78rem;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.5rem;
+    align-items: center;
+    margin-top: 1.2rem;
+
+    .btn--primary {
+      --c-bg: #{$c-bg};
+      --c-text: #{$c-ink};
+    }
+
+    .btn--ghost {
+      color: rgba(255, 255, 255, 0.9);
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  &__scroll {
+    position: absolute;
+    right: $gutter;
+    bottom: 2rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    color: rgba(255, 255, 255, 0.65);
+
+    @include media($bp-md) {
+      display: flex;
+    }
+
+    span {
+      @include mono-label;
+      writing-mode: vertical-rl;
+      font-size: 0.65rem;
+    }
+
+    i {
+      width: 1px;
+      height: 64px;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: -20%;
+        left: 0;
+        right: 0;
+        height: 30%;
+        background: rgba(255, 255, 255, 0.9);
+        animation: hero-scroll 2.2s $ease-inout infinite;
+      }
+    }
+  }
+}
+
+@keyframes hero-scroll {
+  0% {
+    transform: translateY(-40%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
+}
