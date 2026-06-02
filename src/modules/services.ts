@@ -1,8 +1,8 @@
 import { services } from '../data/content';
 import { serviceCardImages } from '../data/assets';
-import type { CategoryKey } from '../data/assets';
+import type { ServiceCardKey } from '../data/assets';
 
-function cardImage(id: CategoryKey): string {
+function cardImage(id: ServiceCardKey): string {
   return serviceCardImages[id] || '';
 }
 

@@ -1,7 +1,7 @@
-import type { CategoryKey } from './assets';
+import type { ServiceCardKey } from './assets';
 
 export interface Service {
-  id: CategoryKey;
+  id: ServiceCardKey;
   title: string;
   items: string[];
   price: string;
