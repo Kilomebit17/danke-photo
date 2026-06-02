@@ -2,14 +2,16 @@
 @use '../mixins' as *;
 
 .services {
-  padding-block: $section-y;
   background: $c-bg;
+  padding: 60px 0;
 
   &__grid {
-    @include container;
     display: flex;
     flex-direction: column;
-    gap: 110px;
+    gap: 100px;
+    @include media($bp-md) {
+      @include container;
+    }
   }
 }
 
@@ -19,8 +21,10 @@
   flex-direction: column;
   overflow: hidden;
   gap: 24px;
+  background: #FAFAFA;
   
   @include media($bp-md) {
+    padding-left: 24px;
     flex-direction: row-reverse;
     align-items: center;
     &:nth-child(2n) {
@@ -36,7 +40,7 @@
 
     @include media($bp-md) {
       width: 558px;
-      height: 360px;
+      height: 558px;
     }
   }
 
@@ -52,6 +56,11 @@
     flex-direction: column;
     flex: 1;
     min-width: 0;
+    padding: 24px 16px;
+
+    @include media($bp-md) {
+      padding: 0;
+    }
   }
 
   &__title {

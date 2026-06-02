@@ -1,15 +1,9 @@
 import { services } from '../data/content';
-import { photos } from '../data/assets';
+import { serviceCardImages } from '../data/assets';
 import type { CategoryKey } from '../data/assets';
 
 function cardImage(id: CategoryKey): string {
-  const pool =
-    id === 'loveStory'
-      ? photos.loveStory.length
-        ? photos.loveStory
-        : photos.family
-      : photos[id];
-  return pool[0] || '';
+  return serviceCardImages[id] || '';
 }
 
 export function initServices(): void {

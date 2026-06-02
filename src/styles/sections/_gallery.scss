@@ -2,7 +2,6 @@
 @use '../mixins' as *;
 
 .gallery {
-  padding-block: $section-y;
   background: $c-bg;
   position: relative;
 
@@ -37,9 +36,10 @@
     @include container;
     display: grid;
     gap: 20px;
-    grid-template-columns: repeat(2, 1fr);
-
+    grid-template-columns: repeat(1, 1fr);
+    
     @include media($bp-md) {
+      grid-template-columns: repeat(2, 1fr);
       justify-content: center;
     }
     
@@ -51,10 +51,6 @@
   display: flex;
   justify-content: center;
   margin-top: 2rem;
-
-  @include media($bp-md) {
-    display: none !important;
-  }
 
   .btn--ghost svg {
     width: 1rem;
@@ -76,14 +72,14 @@
   background: $c-bg-alt;
   cursor: pointer;
   width: 100%;
-  height: 264px;
+  height: 390px;
   will-change: transform;
   border: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
 
   @include media($bp-md) {
-    height: 630px;
+    height: 558px;
   }
 
   img {

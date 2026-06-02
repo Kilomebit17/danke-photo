@@ -36,12 +36,6 @@ export async function initGallery(): Promise<void> {
           width="390"
           height="264"
         />
-        <div class="gallery-tile__overlay" aria-hidden="true">
-          <span class="gallery-tile__category">${categoryLabel[p.category]}</span>
-          <span class="gallery-tile__zoom">
-            <svg viewBox="0 0 24 24" focusable="false"><path d="M5 5h5M5 5v5M19 5h-5M19 5v5M5 19h5M5 19v-5M19 19h-5M19 19v-5" stroke-linecap="round"/></svg>
-          </span>
-        </div>
       </button>`;
   };
 
@@ -52,8 +46,6 @@ export async function initGallery(): Promise<void> {
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>`;
   grid.insertAdjacentElement('afterend', moreBtn);
-
-  const isDesktop = () => window.matchMedia('(min-width: 768px)').matches;
 
   const PAGE_SIZE = 10;
   let rendered = 0;
@@ -66,13 +58,9 @@ export async function initGallery(): Promise<void> {
     initLazyImages();
   };
 
-  moreBtn.addEventListener('click', () => renderBatch(PAGE_SIZE));
+  moreBtn.addEventListener('click', () => renderBatch(galleryPool.length - rendered));
 
-  if (isDesktop()) {
-    renderBatch(galleryPool.length);
-  } else {
-    renderBatch(PAGE_SIZE);
-  }
+  renderBatch(PAGE_SIZE);
 
   slidesWrap.innerHTML = galleryPool
     .map(
