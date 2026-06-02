@@ -65,24 +65,9 @@
     gap: 1.25rem;
   }
 
-  &__eyebrow {
-    @include mono-label;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.9rem;
-    color: rgba(255, 255, 255, 0.72);
-
-    span {
-      width: 42px;
-      height: 1px;
-      background: currentColor;
-      display: inline-block;
-    }
-  }
-
   &__title {
     @include serif-display;
-    font-size: clamp(4rem, 18vw, 17rem);
+    font-size: 64px;
     letter-spacing: -0.03em;
     line-height: 0.88;
     text-wrap: balance;
@@ -92,13 +77,6 @@
       display: inline-block;
       overflow: hidden;
       position: relative;
-
-      // second word italic for tension
-      &:nth-child(2) {
-        font-style: italic;
-        color: $c-accent-soft;
-        margin-left: 0.1em;
-      }
     }
   }
 
@@ -118,11 +96,6 @@
     gap: 0.9rem 1.5rem;
     align-items: center;
     margin-top: 1.2rem;
-
-    .btn--primary {
-      --c-bg: #{$c-bg};
-      --c-text: #{$c-ink};
-    }
 
     .btn--ghost {
       color: rgba(255, 255, 255, 0.9);

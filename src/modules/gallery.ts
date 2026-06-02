@@ -25,7 +25,6 @@ export async function initGallery(): Promise<void> {
   if (!grid || !modalEl || !slidesWrap) return;
   const modal = modalEl;
 
-  // —— Tile markup helper ——
   const tileMarkup = (p: (typeof galleryPool)[number], i: number) => {
     const n = i + 1;
     return `<button class="gallery-tile" data-tile data-gallery-index="${i}" type="button" aria-label="Відкрити фото ${n}: ${categoryLabel[p.category]}">
@@ -34,8 +33,8 @@ export async function initGallery(): Promise<void> {
           alt="${categoryLabel[p.category]} — фото ${n}, Dana Serdiuk"
           loading="lazy"
           decoding="async"
-          width="600"
-          height="800"
+          width="390"
+          height="264"
         />
         <div class="gallery-tile__overlay" aria-hidden="true">
           <span class="gallery-tile__category">${categoryLabel[p.category]}</span>
@@ -46,7 +45,6 @@ export async function initGallery(): Promise<void> {
       </button>`;
   };
 
-  // —— "Show more" button (mobile only) ——
   const moreBtn = document.createElement('div');
   moreBtn.className = 'gallery__more';
   moreBtn.innerHTML = `<button class="btn btn--ghost gallery__more-btn" type="button">
@@ -76,8 +74,6 @@ export async function initGallery(): Promise<void> {
     renderBatch(PAGE_SIZE);
   }
 
-  // —— Slides: empty <img> placeholders; we inject the real src only when the
-  //     modal opens (avoids ~40 non-critical image fetches on idle).
   slidesWrap.innerHTML = galleryPool
     .map(
       (p, i) => `
@@ -95,7 +91,6 @@ export async function initGallery(): Promise<void> {
     )
     .join('');
 
-  // —— Click → open modal
   grid.addEventListener('click', (e) => {
     const tile = (e.target as HTMLElement).closest<HTMLElement>(
       '[data-gallery-index]'
@@ -126,7 +121,6 @@ export async function initGallery(): Promise<void> {
   }
 
   function primeNeighbouringSlides(center: number): void {
-    // Preload the current + adjacent slides only.
     [center - 1, center, center + 1].forEach((i) => {
       if (i >= 0 && i < galleryPool.length) loadSlideImage(i);
     });
@@ -147,7 +141,6 @@ export async function initGallery(): Promise<void> {
   async function openModal(startIndex: number): Promise<void> {
     lastFocused = document.activeElement as HTMLElement | null;
 
-    // Code-split: only load Swiper when the user actually opens the modal.
     if (!swiperInstance) {
       const [{ default: SwiperCtor }, { Keyboard, Navigation }] =
         await Promise.all([
@@ -162,8 +155,6 @@ export async function initGallery(): Promise<void> {
         slidesPerView: 1,
         spaceBetween: 20,
         speed: 500,
-        // Touch-swipe config — Swiper turns this on by default, but we make it
-        // explicit so mobile swipe intent can't be accidentally disabled.
         allowTouchMove: true,
         touchStartPreventDefault: false,
         threshold: 6,
@@ -193,7 +184,6 @@ export async function initGallery(): Promise<void> {
     updateCounter();
     updateNav();
 
-    // Move focus inside the dialog.
     closeBtn?.focus({ preventScroll: true });
   }
 

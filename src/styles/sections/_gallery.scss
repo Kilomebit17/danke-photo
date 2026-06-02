@@ -6,21 +6,43 @@
   background: $c-bg;
   position: relative;
 
+  &__head {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 34px;
+  }
+
+  &__head-title {
+    font-family: $ff-sans;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  &__head-desc {
+    font-family: $ff-sans;
+    font-size: 12px;
+    font-weight: 500;
+    color: $c-ink-2;
+    letter-spacing: 0;
+    text-transform: none;
+    max-width: 52ch;
+  }
+
   &__grid {
     @include container;
     display: grid;
-    gap: 1rem;
+    gap: 20px;
     grid-template-columns: repeat(2, 1fr);
 
     @include media($bp-md) {
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 180px;
-      gap: 1.25rem;
+      justify-content: center;
     }
-
-    @include media($bp-lg) {
-      grid-auto-rows: 240px;
-    }
+    
   }
 }
 
@@ -51,45 +73,17 @@
 .gallery-tile {
   position: relative;
   overflow: hidden;
-  border-radius: $radius-md;
   background: $c-bg-alt;
   cursor: pointer;
-  aspect-ratio: 3 / 4;
+  width: 100%;
+  height: 264px;
   will-change: transform;
   border: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
 
-  // Always-visible mobile affordance — the "zoom" pill hint.
-  @include media-max($bp-md) {
-    &__overlay {
-      opacity: 1;
-      transform: none;
-      background: linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0) 55%,
-        rgba(0, 0, 0, 0.4) 100%
-      );
-    }
-  }
-
   @include media($bp-md) {
-    aspect-ratio: auto;
-
-    // asymmetrical grid spans
-    &:nth-child(10n + 1) {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-    &:nth-child(10n + 4) {
-      grid-row: span 2;
-    }
-    &:nth-child(10n + 7) {
-      grid-column: span 2;
-    }
-    &:nth-child(10n + 9) {
-      grid-row: span 2;
-    }
+    height: 630px;
   }
 
   img {
@@ -123,6 +117,18 @@
     transform: translateY(10px);
     transition: opacity 0.5s $ease-out, transform 0.5s $ease-out;
     pointer-events: none;
+  }
+
+  @include media-max($bp-md) {
+    &__overlay {
+      opacity: 1;
+      transform: none;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0) 55%,
+        rgba(0, 0, 0, 0.4) 100%
+      );
+    }
   }
 
   &__category {

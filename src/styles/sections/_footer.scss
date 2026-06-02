@@ -2,8 +2,8 @@
 @use '../mixins' as *;
 
 .site-footer {
-  background: $c-bg-deep;
-  color: rgba(255, 255, 255, 0.8);
+  background: #FAFAFA;
+  color: #000000;
   padding: clamp(3rem, 6vw, 5rem) $gutter 2rem;
 
   &__top {
@@ -13,7 +13,7 @@
     flex-direction: column;
     gap: 2.5rem;
     padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 
     @include media($bp-md) {
       flex-direction: row;
@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    color: $c-bg;
+    color: #000000;
 
     &-name {
       @include serif-display;
@@ -36,7 +36,7 @@
 
     &-role {
       @include mono-label;
-      color: rgba(255, 255, 255, 0.55);
+      color: $c-ink-3;
     }
   }
 
@@ -54,7 +54,7 @@
     flex-direction: column;
     gap: 0.5rem;
     font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.45);
+    color: $c-ink-3;
 
     @include media($bp-md) {
       flex-direction: row;
@@ -68,10 +68,10 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.7rem 1.1rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(0, 0, 0, 0.14);
   border-radius: 999px;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: #000000;
   transition: background-color 0.4s $ease-out, color 0.4s $ease-out,
     border-color 0.4s $ease-out;
 
@@ -86,19 +86,14 @@
   }
 
   &:hover {
-    background: $c-bg;
-    color: $c-ink;
-    border-color: $c-bg;
+    background: $c-ink;
+    color: $c-bg;
+    border-color: $c-ink;
   }
 
   &--primary {
-    background: $c-accent;
-    color: $c-ink;
-    border-color: $c-accent;
-
-    &:hover {
-      background: $c-accent-soft;
-      border-color: $c-accent-soft;
-    }
+    background: #000000;
+    color: white;
+    border-color: #000000;
   }
 }
