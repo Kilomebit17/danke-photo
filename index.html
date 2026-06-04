@@ -12,6 +12,10 @@
     />
     <link rel="canonical" href="https://danke-photo.vercel.app/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- hreflang: explicitly tell Google this page targets Ukrainian speakers -->
+    <link rel="alternate" hreflang="uk" href="https://danke-photo.vercel.app/" />
+    <link rel="alternate" hreflang="x-default" href="https://danke-photo.vercel.app/" />
     <meta name="author" content="Dana Serdiuk" />
 
     <!-- Open Graph -->
@@ -94,21 +98,29 @@
             "name": "Dana Serdiuk",
             "jobTitle": "Photographer",
             "url": "https://danke-photo.vercel.app/",
-            "sameAs": ["https://instagram.com/"]
+            "sameAs": [
+              "https://instagram.com/danke.ph",
+              "https://t.me/dannkeee"
+            ]
           },
           {
             "@type": "LocalBusiness",
             "@id": "https://danke-photo.vercel.app/#business",
             "name": "Dana Serdiuk Photography",
+            "description": "Кінематографічна фотографія у Івано-Франківську: сімейні та love-story зйомки, персональні портрети, ранок нареченої.",
             "image": "https://danke-photo.vercel.app/og-cover.jpg",
             "url": "https://danke-photo.vercel.app/",
             "priceRange": "2000 – 3499 UAH",
+            "currenciesAccepted": "UAH",
             "address": {
               "@type": "PostalAddress",
               "addressLocality": "Ivano-Frankivsk",
               "addressCountry": "UA"
             },
-            "areaServed": "Ivano-Frankivsk"
+            "areaServed": {
+              "@type": "City",
+              "name": "Ivano-Frankivsk"
+            }
           }
         ]
       }

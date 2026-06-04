@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://danke-photo.vercel.app/sitemap.xml
